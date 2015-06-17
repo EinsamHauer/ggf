@@ -1,12 +1,27 @@
 grammar Graphite;
 
-expression: call | pathExpression;
+expression:
+                call                    # ExpressionCall
+            |   pathExpression          # ExpressionPathExpression
+;
+
 pathExpression: (pathElement DOT)* pathElement;
+
 pathElement: (partialPathElement | matchEnum)+;
+
 matchEnum: LEFT_BRACE (partialPathElement COMMA)* partialPathElement RIGHT_BRACE;
+
 args: (WS* arg WS* COMMA WS*)* arg WS*;
-arg: Boolean | number | QoutedString | expression;
-call: FunctionName LEFT_PAREN args* RIGHT_PAREN;
+
+arg:
+                Boolean                 # ArgBoolean
+            |   number                  # ArgNumber
+            |   QoutedString            # ArgString
+            |   expression              # ArgExpression
+;
+
+call: FunctionName LEFT_PAREN args RIGHT_PAREN;
+
 partialPathElement: (EscapedChar | VALID_METRIC_CHAR)+ | FunctionName;
 
 number: Integer | Float | Scientific;
