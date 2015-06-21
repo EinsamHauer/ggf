@@ -1,5 +1,7 @@
 package net.iponweb.timeseries;
 
+import java.util.Arrays;
+
 /**
  * Created by aivanov on 6/17/15.
  */
@@ -10,7 +12,7 @@ public class TimeSeries {
     private Long to;
     private Long step;
 
-    private Double[] values;
+    private Double[] values = new Double[0];
 
     public TimeSeries(String name, Long from, Long to, Long step) {
         this.name = name;
@@ -57,5 +59,16 @@ public class TimeSeries {
 
     public void setValues(Double[] values) {
         this.values = values;
+    }
+
+    @Override
+    public String toString() {
+        return "TimeSeries{" +
+                "name='" + name + '\'' +
+                ", from=" + from +
+                ", to=" + to +
+                ", step=" + step +
+                ", values=" + Arrays.toString(values) +
+                '}';
     }
 }

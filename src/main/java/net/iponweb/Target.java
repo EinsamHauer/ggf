@@ -1,5 +1,7 @@
 package net.iponweb;
 
+import net.iponweb.exceptions.EvaluationException;
+import net.iponweb.exceptions.TimeSeriesNotAlignedException;
 import net.iponweb.timeseries.TimeSeries;
 
 import java.util.List;
@@ -9,39 +11,19 @@ import java.util.List;
  */
 public abstract class Target {
 
-    private String tenant;
-    private Long from;
-    private Long to;
+    private String text;
 
-    public Target(String tenant, Long from, Long to) {
-        this.tenant = tenant;
-        this.from = from;
-        this.to = to;
+    public Target(String text) {
+        this.text = text;
     }
 
-    public abstract List<TimeSeries> eval();
+    public abstract List<TimeSeries> evaluate(TargetEvaluator evaluator) throws EvaluationException;
 
-    public String getTenant() {
-        return tenant;
+    public String getText() {
+        return text;
     }
 
-    public void setTenant(String tenant) {
-        this.tenant = tenant;
-    }
-
-    public Long getFrom() {
-        return from;
-    }
-
-    public void setFrom(Long from) {
-        this.from = from;
-    }
-
-    public Long getTo() {
-        return to;
-    }
-
-    public void setTo(Long to) {
-        this.to = to;
+    public void setText(String text) {
+        this.text = text;
     }
 }

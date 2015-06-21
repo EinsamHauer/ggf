@@ -1,5 +1,6 @@
 package net.iponweb;
 
+import net.iponweb.exceptions.EvaluationException;
 import net.iponweb.timeseries.TimeSeries;
 
 import java.util.List;
@@ -10,10 +11,16 @@ import java.util.List;
 public class PathTarget extends Target {
 
     private String path;
+    private String tenant;
+    private Long from;
+    private Long to;
 
-    public PathTarget(String tenant, Long from, Long to, String path) {
-        super(tenant, from, to);
+    public PathTarget(String text, String path, String tenant, Long from, Long to) {
+        super(text);
         this.path = path;
+        this.tenant = tenant;
+        this.from = from;
+        this.to = to;
     }
 
     @Override
@@ -24,7 +31,7 @@ public class PathTarget extends Target {
     }
 
     @Override
-    public List<TimeSeries> eval() {
-        return null;
+    public List<TimeSeries> evaluate(TargetEvaluator evaluator) throws EvaluationException {
+        return evaluator.visit(this);
     }
 }
